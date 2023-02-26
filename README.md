@@ -1,6 +1,6 @@
 <h1 style="color:blue">Analysis of Unrecognized User Requests in Goal-Oriented Dialog Systems</h1>
 
-**Project BY : Dvir Magen, Yuval Vinokur**
+**Project BY : Dvir Magen, [Yuval Vinokur](https://github.com/Yuval-Vino)**
 
 [Explore our in-depth Colab notebook for a detailed examination of text cluster analysis.](https://colab.research.google.com/drive/1fWjQWfjHEPMp4RGYw_usOFfON4NwJIfP?usp=sharing)
 
