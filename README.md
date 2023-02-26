@@ -19,37 +19,32 @@ quarantine work” request classify as “quarantine work”.
 
 
 ## • Clustering requests:  
-The number of clustering is unknown and must be discovered by the clustering 
-algorithm.  
-surfacing topical clusters in unhandled requests is done by implementing the
-clustering algorithm that uses the Sentence-Bert (SBERT) model but without defining
-constant k, also tried to use the Tf-idf model and get insufficient results.  
-At first, we read the input data file and insert the sentences into a list.  Then, encode the 
-sentences by using the pre-trained model. 
- 
-The embeddings are then transformed into a sparse matrix, computes the cosine 
-similarity between an input item (a sentence embedding) and each of the centroids, and 
-builds a list of similarities and the index of the centroid with the highest similarity.   
-Updates the centroids based on the items in each cluster.   
- It creates a list of lists, where each sublist contains the embeddings of the items in a cluster.    
-The sublists with fewer than minimum items to cluster that define in the config file are 
-removed. For each remaining sublist, the mean of the embeddings is computed, and if it 
-is different from the corresponding centroid, the centroid is updated. The new centroids 
-and a boolean variable indicating whether the algorithm can stop early. 
+Our algorithm leverages the Sentence-Bert (SBERT) model to cluster input data into groups of an unknown number.  
+This is achieved by implementing a clustering algorithm that doesn't rely on a fixed k value.   
+Our previous attempt to use the Tf-idf model didn't yield satisfactory results.
 
 
-We initialize an empty list of centroids and randomly select an item from the input 
-data to be the first centroid, then create an empty list of clusters of the same length as 
-the input data, where each element is initialized to -1, then shuffles the indexes of the 
-input data and iterates through them and updating the clusters and the centroids.
-If the algorithm reaches a state where the centroids do not change, it stops early. The 
-maximum number of iterations is set to 10.  
-By using a similarity threshold of 0.65, the code ensures that only items that are 
-sufficiently like an existing cluster centroid are added to that cluster. 
-This helps to control the growth of the number of clusters since new clusters are only 
-created for items that are not like any existing cluster centroid. Then, filtering the 
-clusters to exclude those with fewer than 10 items. The clusters list contains the 
-sentences and their corresponding data points grouped into clusters.
+Initially, we read the input data and create a list of its sentences. Then, using the pre-trained SBERT model, we encode these sentences into embeddings.  
+Finally, we use the clustering algorithm to surface topical clusters in unhandled requests.
+
+
+The algorithm transforms the embeddings into a sparse matrix and calculates the cosine similarity between each sentence embedding and the centroids.  
+It generates a list that includes the similarities and the index of the centroid with the highest similarity.  
+The algorithm updates the centroids based on the items in each cluster. 
+A list of lists is created, with each sublist containing the embeddings of the items in a particular cluster.  
+The sublists that contain fewer items than the minimum specified in the configuration file are removed.  
+For each remaining sublist, the mean of the embeddings is calculated.   
+If the mean is different from the corresponding centroid, the centroid is updated accordingly.  
+The algorithm generates new centroids and a boolean variable indicating whether it can stop early.
+
+
+To start, an empty list of centroids is initialized, and a random item from the input data is selected as the first centroid.  
+Additionally, an empty list of clusters is created with the same length as the input data, where each element is initialized to -1.  
+The indexes of the input data are shuffled, and the algorithm iterates through them, updating the clusters and the centroids.  
+If the centroids do not change, the algorithm stops early, with a maximum of 10 iterations.  
+To prevent the growth of the number of clusters, a similarity threshold of 0.65 is used to ensure that only items that are sufficiently similar to an existing cluster centroid are added to that cluster.  
+Clusters with fewer than 10 items are filtered out.   
+The resulting clusters list contains the sentences and their corresponding data points grouped into clusters based on their similarity to the centroids.
 
 ![IDEA](https://imgur.com/3XnokxD.png)
 
